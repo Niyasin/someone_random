@@ -19,6 +19,7 @@ export default function App() {
   const [data,setData]=useState(dummy);
   const [user,setUser]=useState(null);
   const [stage,setStage]=useState(0);
+  const [current,setCurrent]=useState(null);
 
   const test=()=>{
     let xhr=new XMLHttpRequest();
@@ -29,13 +30,19 @@ export default function App() {
     xhr.send();
   }
   var socket = null;
-  const connect=()=>{
+
+  const connect=(data)=>{
     socket = io({
-      auth:{
-        name:'niyas',
-        tags:[],
-      }
+      auth:data,
     });
+    setUser({...data,blocklist:[]})
+
+    socket.on('connect',()=>{
+      socket.emit('find',[]);
+    });
+    socket.on('match',(data)=>{
+      console.log("🍎Match" ,data);
+    })
   }
 
   return (
@@ -45,9 +52,8 @@ export default function App() {
       :
       <div className="container">
             <img src="./main.png" className="mainImage"/>
-            {/* <div className="button" onClick={test}>Test</div> */}
             {stage==0?<Hero setStage={setStage}/>:
-              <>{stage==1?<Form connect={connect} />:
+              <>{stage==1?<Form connect={connect} user={user} setUser={setUser}/>:
                 <Loading/>
               }</>
               }
