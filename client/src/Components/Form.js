@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Form(){
+export default function Form({connect}){
   var avatars=['./avatar.jpg',];
   const [Tags,setTags]=useState(['Music','Painting','Astrology']);
   const [result,setResult]=useState([]);
@@ -47,7 +47,7 @@ export default function Form(){
                   </div>
                 :<></>}
               </div>
-                <div className="button">Find Someone</div>
+                <div className="button" onClick={connect}>Find Someone</div>
           </div>
     )
 }
