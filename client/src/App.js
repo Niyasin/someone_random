@@ -15,20 +15,33 @@ export default function App() {
       {dir:1,text:'Hello'},
     ]
   };
-  const [data,setData]=useState(null);
+  const [data,setData]=useState(dummy);
   const [user,setUser]=useState(null);
-  const [stage,setStage]=useState(0);
+  const [stage,setStage]=useState(2);
   return (
   <>
-    {data?
+    {stage==3?
       <Chat data={data}/>
       :
       <div className="container">
             <img src="./main.png" className="mainImage"/>
-            {stage==0?<Hero/>:<Form/>}
+            {stage==0?<Hero setStage={setStage}/>:
+              <>{stage==1?<Form setUser={setUser}/>:
+                <Loading/>
+              }</>
+              }
       </div>
     }
     </>
   );
 }
 
+const Loading=()=>{
+  return(
+    <div className="loading">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  )
+}

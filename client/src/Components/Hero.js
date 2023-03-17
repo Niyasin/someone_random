@@ -1,4 +1,4 @@
-export default function Hero(){
+export default function Hero({setStage}){
     return(
         <div className="hero">
             <div>
@@ -6,7 +6,7 @@ export default function Hero(){
               <h1>Random</h1>
             </div>
             <span className="sm">Connect with a stranger, discover a world of new possibilities!</span>
-            <div className="button">Get Started</div>
+            <div className="button" onClick={()=>{setStage(1)}}>Get Started</div>
           </div>
     )
 }

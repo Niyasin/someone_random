@@ -4,7 +4,7 @@ export default function Form(){
   var avatars=['./avatar.jpg',];
   const [Tags,setTags]=useState(['Music','Painting','Astrology']);
   const [result,setResult]=useState([]);
-  const [avatarSelect,setAvatarSelect]=useState(true);
+  const [avatarSelect,setAvatarSelect]=useState(false);
   const [avatar,setAvatar]=useState(0);
     return(
         <div className="form">

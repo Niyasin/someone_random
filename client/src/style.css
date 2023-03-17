@@ -28,10 +28,11 @@ body {
   height: 95vh;
   border-radius: var(--r);
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  gap:10%;
+  gap:15%;
   background: var(--bg2);
-  padding: 10%;
+  padding: 3%;
 }
 h1{
   font-size: 4rem;
@@ -108,7 +109,7 @@ h1{
 .tag svg{
   width: 20px;
   height: 20px;
-  fill: var(--bg1);
+  fill: var(--sec);
   cursor: pointer;
 }
 
@@ -243,4 +244,33 @@ h1{
 .recieved{
   background: #FEC067;
   border-bottom-left-radius:0;
+}
+.loading{
+  min-width:20%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.loading div{
+  width: 20px;
+  aspect-ratio: 1/1;
+  transition: var(--t);
+  animation: loading 1s ease infinite;
+}
+@keyframes loading {
+  0%{transform: scale(1);}
+  50%{transform: scale(1.2);}
+  100%{transform: scale(1);}
+}
+.loading div:nth-child(1){
+  background: #80A3AF;
+  animation-delay: 0s;
+}
+.loading div:nth-child(2){
+  background: #FEC067;
+  animation-delay: 0.3s;
+}
+.loading div:nth-child(3){
+  background: #FF7576;
+  animation-delay: 0.6s;
 }
