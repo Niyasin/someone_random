@@ -16,7 +16,7 @@ export default function App() {
       {dir:1,text:'Hello'},
     ]
   };
-  const [data,setData]=useState(dummy);
+  const [data,setData]=useState();
   const [user,setUser]=useState(null);
   const [stage,setStage]=useState(0);
   const [current,setCurrent]=useState(null);
@@ -39,10 +39,13 @@ export default function App() {
 
     socket.on('connect',()=>{
       socket.emit('find',[]);
+      setStage(2);
     });
     socket.on('match',(data)=>{
       console.log("🍎Match" ,data);
-    })
+      setData({...data,messages:[]});
+      setStage(3);
+    });
   }
 
   return (

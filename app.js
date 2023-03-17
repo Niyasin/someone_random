@@ -21,8 +21,14 @@ const match=(user)=>{
             }
         })
         if(possible.length){
-            io.to(possible[0].socket.id).emit('match',user.socket.id);
-            io.to(user.socket.id).emit('match',possible[0].socket.id);
+            io.to(possible[0].socket.id).emit('match',{
+                id:user.socket.id,
+                ...user.socket.handshake.auth,
+            });
+            io.to(user.socket.id).emit('match',{
+                id:possible[0].socket.id,
+                ...possible[0].socket.handshake.auth,
+            });
 
             waiting=waiting.filter(e=>{if(e==possible[0]){return false}else{return true}});
         }else{
