@@ -50,6 +50,12 @@ io.on('connection', async (socket)=>{
     socket.on('find',(blocklist)=>{
         match({socket,blocklist});
     })
+    socket.on('message',(data)=>{
+        console.log(data);
+        if(socket.id==data.from){
+            socket.to(data.to).emit('message',data);
+        }
+    })
 });
 
 
@@ -57,4 +63,11 @@ app.get('/test',(req,res)=>{
     console.log("😋");
     res.send("😋");
 })
+
+
+app.get('/clear',(req,res)=>{
+    waiting=[];
+    res.send("cleared");
+})
+
 server.listen(8080);

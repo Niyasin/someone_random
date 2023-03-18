@@ -1,4 +1,14 @@
-export default function Chat({data}){
+import { useEffect, useRef, useState } from "react"
+
+export default function Chat({data,messages,send}){
+    const [message,setMessage]=useState('');
+    const inp=useRef(null);
+    const last=useRef(null);
+    useEffect(()=>{
+        if(last.current){
+            last.current.scrollIntoView();
+        }
+        },[messages])
     return(
     <div className="wrap">
            <div className="profile">
@@ -15,16 +25,28 @@ export default function Chat({data}){
            <div className="chat">
             <div className="messages">
                 {
-                    data.messages.map((m,i)=>{
-                        return(
-                            <div className={m.dir?"message send":"message recieved"}>{m.text}</div>
-                        )
+                    messages.map((m,i)=>{
+                        return(<>
+                            {i==messages.length-1?
+                                <div className={m.dir?"message send":"message recieved"} ref={last}>{m.text}</div>
+                                
+                                :
+                                <div className={m.dir?"message send":"message recieved"} >{m.text}</div>
+                            }
+                        </>)
                     })
                 }
             </div>
             <div className="inputcontainer">
-                <input/>
-                <div className="sendbtn">
+                <input onChange={e=>{setMessage(e.target.value);}} ref={inp}/>
+                <div className="sendbtn" onClick={()=>{
+                        if(message.length){
+                            send(message);
+                            inp.current.value='';
+                            setMessage("")
+                        }
+                    }
+                }>
                 <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13" />
                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
