@@ -29,13 +29,14 @@ const match=(user)=>{
                 id:possible[0].socket.id,
                 ...possible[0].socket.handshake.auth,
             });
-
-            waiting=waiting.filter(e=>{if(e==possible[0]){return false}else{return true}});
+            
+            waiting=waiting.filter(e=>{if(e.socket.id==possible[0].socket.id){console.log("hello"); return false}else{return true}});
         }else{
             waiting.push(user);
         }
     }
 }
+
 
 io.on('connection', async (socket)=>{
     users= await (await io.sockets.fetchSockets()).map(e=>{return(
@@ -44,14 +45,10 @@ io.on('connection', async (socket)=>{
             ...e.handshake.auth,
         }
     )});
-    console.clear();
-    console.log(users);
-    console.log("Waiting",waiting.length);
     socket.on('find',(blocklist)=>{
         match({socket,blocklist});
     })
     socket.on('message',(data)=>{
-        console.log(data);
         if(socket.id==data.from){
             socket.to(data.to).emit('message',data);
         }
@@ -69,5 +66,4 @@ app.get('/clear',(req,res)=>{
     waiting=[];
     res.send("cleared");
 })
-
 server.listen(8080);
