@@ -10,6 +10,9 @@ const io = new Server(server);
 var users=[];
 var waiting=[];
 
+
+
+
 const match=(user)=>{
     if(waiting.length==0){
         waiting.push(user);
@@ -21,22 +24,42 @@ const match=(user)=>{
             }
         })
         if(possible.length){
-            io.to(possible[0].socket.id).emit('match',{
+            let selected =findBest(possible,user);
+            io.to(selected.socket.id).emit('match',{
                 id:user.socket.id,
                 ...user.socket.handshake.auth,
             });
             io.to(user.socket.id).emit('match',{
-                id:possible[0].socket.id,
-                ...possible[0].socket.handshake.auth,
+                id:selected.socket.id,
+                ...selected.socket.handshake.auth,
             });
             
-            waiting=waiting.filter(e=>{if(e.socket.id==possible[0].socket.id){console.log("hello"); return false}else{return true}});
+            waiting=waiting.filter(e=>{if(e.socket.id==possible[0].socket.id){return false}else{return true}});
         }else{
             waiting.push(user);
         }
     }
 }
 
+const findBest=(possible,user)=>{
+    let topIndex=0;
+    let topScore=0;
+    let 
+    tags=user.socket.handshake.auth.tags;
+    possible.forEach((e,i)=>{
+        let score=0;
+        e.socket.handshake.auth.tags.forEach(t=>{
+            if(tags.includes(t)){
+                score++;
+            }
+        });
+        if(score>topScore){
+            topScore=score;
+            topIndex=i;
+        }
+    });
+    return(possible[topIndex]);
+}
 
 io.on('connection', async (socket)=>{
     users= await (await io.sockets.fetchSockets()).map(e=>{return(
