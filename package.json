@@ -11,6 +11,9 @@
     "url": "git+https://github.com/Niyasin/someone_random.git"
   },
   "author": "",
+  "scripts":{
+    "build" : "cd client && npm run build && cd ../"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Niyasin/someone_random/issues"
