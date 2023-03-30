@@ -1,7 +1,7 @@
 import express from "express";
 import {Server} from "socket.io";
 import {createServer} from "http";
-
+import { join } from "path";
 const app=express();
 const server=createServer(app);
 const io = new Server(server);
@@ -83,7 +83,10 @@ app.get('/test',(req,res)=>{
     console.log("😋");
     res.send("😋");
 })
-
+app.use(express.static(join(__dirname,'client','build')));
+app.get('/',(req,res)=>{
+    res.sendFile(join(__dirname,'client','build','index.html'));
+})
 
 app.get('/clear',(req,res)=>{
     waiting=[];
