@@ -12,7 +12,7 @@
   },
   "author": "",
   "scripts":{
-    "build" : "cd client && npm run build && cd ../"
+    "build" : "npm install package.json && cd client && npm install package.json && npm run build && cd ../"
   },
   "license": "ISC",
   "bugs": {
