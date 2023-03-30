@@ -1,7 +1,9 @@
-import express from "express";
-import {Server} from "socket.io";
-import {createServer} from "http";
-import path from "path";
+const express = require("express");
+const {Server} =  require("socket.io");
+const {createServer} = require("http");
+const path = require("path");
+
+
 const app=express();
 const server=createServer(app);
 const io = new Server(server);
@@ -93,3 +95,4 @@ app.get('/clear',(req,res)=>{
     res.send("cleared");
 })
 server.listen(8080);
+console.log("Server Started 🚀");
